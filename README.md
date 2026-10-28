@@ -12,7 +12,6 @@
 | `setup.sql` | 環境構築 |
 | `teardown.sql` | 後片付け（作成したオブジェクトを全削除） |
 | `chapters/` | 各章の手順 |
-| `data/` | 合成データ |
-| `notebooks/` `apps/` | Notebook / Streamlit |
+| `data/` | 合成データ（非構造化データ実習用の架空の問い合わせ文と、その生成スクリプト。販売データは `setup.sql` が生成） |
 
 > 本資材のデータはすべて架空の合成データです。
