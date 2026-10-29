@@ -5,7 +5,7 @@
 - Snowflake のトライアルアカウント（Enterprise / AWS / Asia Pacific (Tokyo)）を作成済みであること
 - ACCOUNTADMIN ロールでログインできること
 ## 手順
-### Step 1 SQL ファイル（ワークシート）を開く
+### Step 1 SQL ファイルを開く
 Snowsight にログインし、左メニューの「Projects」→「Workspaces」を開き、「SQL file」ボタンで新しい SQL ファイルを作ります。
 ### Step 2 setup.sql を実行する
 このリポジトリの [setup.sql](../setup.sql) の中身をすべてコピーして SQL ファイルに貼り付け、「すべて実行」（Ctrl/Cmd + Shift + Enter）します。約2分で終わります。

@@ -2,7 +2,7 @@
 -- ハンズオン環境のセットアップ（setup.sql）
 -- 前提: Snowflake のトライアルアカウント（AWS 東京・Enterprise）に
 --       ACCOUNTADMIN ロールでログインしていること
--- 使い方: Snowsight のワークシートに全文を貼り付け、
+-- 使い方: Snowsight の SQL ファイル（Projects → Workspaces →「SQL file」）に全文を貼り付け、
 --         「すべて実行」で上から順に実行します（約1〜2分）
 -- 何度実行しても同じ状態になります（やり直してもかまいません）
 -- データはすべて架空の合成データです

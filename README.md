@@ -4,7 +4,7 @@
 
 ## 事前準備
 1. Snowflake の無料トライアルアカウントを作成してください（Enterprise エディション推奨）。
-2. Snowsight にログインし、ワークシートで [`setup.sql`](setup.sql) の内容を実行してください。
+2. Snowsight にログインし、SQL ファイル（Projects → Workspaces →「SQL file」）で [`setup.sql`](setup.sql) の内容を実行してください。
 
 ## 構成
 | パス | 内容 |
