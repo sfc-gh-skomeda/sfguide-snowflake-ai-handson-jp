@@ -4,7 +4,7 @@
 ## 前提
 第0章が終わっていること。約6,000万行の明細表（LINEITEM_SORTED）を使います。
 ## 手順
-新しいワークシートに [sql/05_performance.sql](../sql/05_performance.sql) を貼り付け、1文ずつ実行します。各 SQL の実行後、結果欄の「Query Details」（または「…」→「View Query Profile」）でプロファイルを開き、下の表に記録します。
+新しい SQL ファイル（Projects → Workspaces →「SQL file」）に [sql/05_performance.sql](../sql/05_performance.sql) を貼り付け、1文ずつ実行します。各 SQL の実行後、画面下の「Query History」で該当する行の右端にあるクエリ ID を押し、開いた画面の「Query Profile」タブで右側の「Statistics」を見て、下の表に記録します（Monitoring → Query History からも開けます）。
 | パターン | 見る指標 | 改善前 | 改善後 |
 |---|---|---|---|
 | P1 SELECT * | スキャン量 | | |
@@ -13,7 +13,8 @@
 
 P4（ウェアハウスのサイズ変更）と P5（結果キャッシュ）はおまけです。
 ## 確認ポイント（期待結果）
-- P2: 件数はどちらも 774,721。パーティション数が改善後に大きく減ります（例: 88 → 2）
+- P1: スキャン量が改善後に減ります（例: 約 6.7MB → 約 1.0MB）
+- P2: 件数はどちらも 774,721。パーティション数が改善後に大きく減ります（例: 48 → 2）
 - P3: 改善前 3,098,884 行 → 改善後 774,721 行
 ## うまくいかない時
 - 2回目以降すぐ終わる: 結果キャッシュが効いています。最初の `ALTER SESSION SET USE_CACHED_RESULT = FALSE;` を実行してください。

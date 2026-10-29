@@ -4,7 +4,7 @@
 ## 前提
 第0章が終わっていること。
 ## 手順
-新しいワークシートに [sql/06_unstructured.sql](../sql/06_unstructured.sql) を貼り付け、1文ずつ実行します。
+新しい SQL ファイル（Projects → Workspaces →「SQL file」）に [sql/06_unstructured.sql](../sql/06_unstructured.sql) を貼り付け、1文ずつ実行します。
 - U1 ファイルの一覧と件数
 - U2 キーワード検索と、商品ごとの件数
 - U3 キーワード辞書と突き合わせて、話題ごとの件数
@@ -17,3 +17,4 @@
 
 ## うまくいかない時
 - ファイル数が 0: 第0章の setup.sql をもう一度実行してください。
+- 講師デモの AI 関数（AI_SENTIMENT など）は、トライアルアカウントでは使えません（実行すると「not available for trial accounts」と表示されます）。デモは講師の画面でご覧ください。
