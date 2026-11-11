@@ -27,7 +27,7 @@ SELECT COUNT(*) AS "件数"
 FROM LINEITEM_SORTED l JOIN PARTSUPP ps ON l.l_partkey = ps.ps_partkey AND l.l_suppkey = ps.ps_suppkey
 WHERE l.l_shipdate >= '1995-03-01' AND l.l_shipdate < '1995-04-01';
 
--- P4（おまけ）: ウェアハウスを一時的に大きくします
+-- P4: ウェアハウスを一時的に大きくします
 ALTER WAREHOUSE HANDSON_WH SET WAREHOUSE_SIZE = 'SMALL';
 -- P4: 大きくしたウェアハウスで P3 改善前を再実行し、秒数を比べます
 SELECT COUNT(*) AS "件数"
@@ -36,7 +36,7 @@ WHERE l.l_shipdate >= '1995-03-01' AND l.l_shipdate < '1995-04-01';
 -- P4: ウェアハウスのサイズを元に戻します
 ALTER WAREHOUSE HANDSON_WH SET WAREHOUSE_SIZE = 'XSMALL';
 
--- P5（おまけ）: 結果キャッシュを有効に戻します
+-- P5: 結果キャッシュを有効に戻します
 ALTER SESSION SET USE_CACHED_RESULT = TRUE;
 -- P5: 同じ SQL を2回実行し、2回目が一瞬で終わることを確認します
 SELECT COUNT(*) AS "件数" FROM LINEITEM_SORTED WHERE l_shipdate >= '1995-03-01' AND l_shipdate < '1995-04-01';

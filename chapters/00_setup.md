@@ -8,7 +8,7 @@
 ### Step 1 SQL ファイルを開く
 Snowsight にログインし、左メニューの「Projects」→「Workspaces」を開き、「SQL file」ボタンで新しい SQL ファイルを作ります。
 ### Step 2 setup.sql を実行する
-このリポジトリの [setup.sql](../setup.sql) の中身をすべてコピーして SQL ファイルに貼り付け、「すべて実行」（Ctrl/Cmd + Shift + Enter）します。約2分で終わります。
+このリポジトリの [setup.sql](../setup.sql) の中身をすべてコピーして SQL ファイルに貼り付け、「すべて実行（Run all）」（Ctrl/Cmd + Shift + Enter）します。約2分で終わります。
 ## 確認ポイント（期待結果）
 最後に次の表が表示されれば完了です。
 
