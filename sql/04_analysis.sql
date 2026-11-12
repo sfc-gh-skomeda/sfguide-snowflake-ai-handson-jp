@@ -60,3 +60,23 @@ SELECT log:event.type::STRING AS event_type,
 FROM APP_LOGS;
 -- 【確認クエリ】ビューから年代別のイベント数を数えます
 SELECT age_band AS "年代", COUNT(*) AS "件数" FROM APP_EVENTS GROUP BY 1 ORDER BY 1;
+
+-- ============================================================
+-- 講師デモ（トライアルでは実行できません。本契約の環境で後日お試しください）
+-- ============================================================
+-- デモA: Snowflake App Runtime のダッシュボード（KPI・月別推移・AI に原因を聞く・CSV 保存）
+--   AI が SQL を作るための「意味の辞書」（セマンティックビュー）を作り、Agent に渡しています。例:
+-- CREATE OR REPLACE SEMANTIC VIEW HANDSON_DB.AI.SALES_SV
+--   TABLES (sales AS HANDSON_DB.MART.SALES_DAILY, products AS HANDSON_DB.MART.PRODUCTS PRIMARY KEY (product_id),
+--           stores AS HANDSON_DB.MART.STORES PRIMARY KEY (store_id))
+--   RELATIONSHIPS (sales (product_id) REFERENCES products, sales (store_id) REFERENCES stores)
+--   FACTS (sales.amount_value AS sales_amount)
+--   DIMENSIONS (sales.sale_month AS DATE_TRUNC('month', sale_date), stores.area AS area, products.product_name AS product_name)
+--   METRICS (sales.total_sales AS SUM(sales.amount_value));
+--   アプリは Cortex Code に「このデータで KPI ダッシュボードを作って」と頼んで作りました。
+--
+-- デモB: Marketplace のデータ（日本の飲食店データ）を CoCo in Snowsight で探して、販売データと組み合わせる
+--   Marketplace で取得したデータは、自分のデータベースと同じように SQL で読めます。例:
+-- SELECT genre_sub_name AS "ジャンル", COUNT(*) AS "営業中の店"
+-- FROM FOOD_ESTABLISHMENTS_DATA_SET_IN_JAPAN.MART.FOOD_SAMPLE_OSAKA_CHUO
+-- WHERE closed_flag = 0 GROUP BY 1 ORDER BY 2 DESC LIMIT 10;

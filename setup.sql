@@ -121,6 +121,7 @@ INSERT INTO HANDSON_DB.MART.CAMPAIGNS VALUES
 
 -- 日別の販売データ（約50万行・2024年11月〜2026年10月）を作ります
 -- 新商品は発売日前には売れず、キャンペーン中と関東・近畿でよく売れるようにしています
+-- また 2026年7月の近畿では、新商品が店頭で品切れになり販売が大きく落ちたことにしています
 CREATE TABLE HANDSON_DB.MART.SALES_DAILY AS
 WITH base AS (
   SELECT
@@ -145,6 +146,7 @@ SELECT
   ROUND(f.q0
     * IFF(f.product_id = 11 AND f.sale_date BETWEEN '2026-05-01' AND '2026-05-31', 3, 1)
     * IFF(f.product_id = 11 AND s.area IN ('関東','近畿'), 1.5, 1)
+    * IFF(f.product_id = 11 AND s.area = '近畿' AND f.sale_date BETWEEN '2026-07-01' AND '2026-07-31', 0.3, 1)
     * IFF(f.sale_date >= '2025-11-01', 1.05, 1))::INT AS quantity,  -- 販売個数
   quantity * p.unit_price AS sales_amount                          -- 売上金額（円）
 FROM fixed f
@@ -243,7 +245,8 @@ INSERT INTO HANDSON_DB.VOC.KEYWORDS VALUES
   ('価格', '値段'), ('価格', '価格'), ('価格', '安く'),
   ('パッケージ', '個包装'), ('パッケージ', '箱'), ('パッケージ', '袋'), ('パッケージ', 'デザイン'),
   ('量', '量'),
-  ('売り場', '店頭'), ('売り場', '売って'), ('売り場', 'コンビニ');
+  ('売り場', '店頭'), ('売り場', '売って'), ('売り場', 'コンビニ'),
+  ('売り場', '見つから'), ('売り場', '売り切れ'), ('売り場', '置いて');
 
 -- ------------------------------------------------------------
 -- 5. HANDSON_ROLE に権限を付ける

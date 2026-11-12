@@ -21,3 +21,15 @@ SELECT k.topic AS "話題", COUNT(DISTINCT i.inquiry_id) AS "件数"
 FROM INQUIRIES i JOIN KEYWORDS k ON i.inquiry_text ILIKE '%' || k.keyword || '%'
 GROUP BY 1
 ORDER BY 2 DESC;
+
+-- ============================================================
+-- 講師デモ（トライアルでは実行できません）
+-- ============================================================
+-- デモD: Snowflake CoWork で、社内文書（架空の PDF・data/docs/pdf）と販売データに質問する（RAG）
+--   PDF を AI_PARSE_DOCUMENT で文章にし、Cortex Search で検索できるようにして、Agent から使います。例:
+-- CREATE OR REPLACE TABLE HANDSON_DB.AI.DOCS_PARSED AS
+-- SELECT relative_path, AI_PARSE_DOCUMENT(TO_FILE('@HANDSON_DB.AI.DOCS_STAGE', relative_path), {'mode': 'LAYOUT'}):content::STRING AS content
+-- FROM DIRECTORY(@HANDSON_DB.AI.DOCS_STAGE);
+-- CREATE OR REPLACE CORTEX SEARCH SERVICE HANDSON_DB.AI.DOCS_SEARCH ON chunk WAREHOUSE = HANDSON_WH TARGET_LAG = '1 day'
+--   AS SELECT relative_path, chunk FROM HANDSON_DB.AI.DOC_CHUNKS;
+--   CoWork での質問の例:「抹茶ナッツバーに卵は入っていますか？」「7月に近畿で新商品の売上が落ちた理由は？」

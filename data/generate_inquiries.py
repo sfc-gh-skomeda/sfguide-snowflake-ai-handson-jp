@@ -33,6 +33,9 @@ TOPICS = {
     "売り場": ["近くの店頭で見つからず困りました。", "どこで売っているか教えてください。",
              "コンビニで見かけて購入しました。"],
 }
+# 2026年7月は近畿で新商品が品切れになった（setup.sql の販売データと対応）
+STOCKOUT = ["大阪の近所のスーパーで探しましたが、どこにも置いていませんでした。", "京都の店で売り切れと言われました。いつ入荷しますか。",
+            "神戸のコンビニで見つからず困りました。", "大阪の店頭から急に消えてしまい残念です。販売終了でしょうか。"]
 OPEN = ["", "いつも楽しみにしています。", "先日初めて購入しました。", "子どものおやつに買っています。"]
 CLOSE = ["", "今後もよろしくお願いします。", "ご検討いただけるとうれしいです。", "また購入します。"]
 
@@ -61,6 +64,9 @@ def main():
             body = body.replace("抹茶の", "")
         text = f"{rng.choice(OPEN)}「{product}」について。{body}{rng.choice(CLOSE)}"
         d = pick_date(new_product)
+        if new_product and d.year == 2026 and d.month == 7:
+            # 7月の新商品への声は、品切れの内容に差し替える（乱数の並びは変えない）
+            text = f"{OPEN[i % len(OPEN)]}「{product}」について。{STOCKOUT[i % len(STOCKOUT)]}{CLOSE[i % len(CLOSE)]}"
         (OUT / f"INQ_{d:%Y%m%d}_{i:04d}.txt").write_text(text + "\n", encoding="utf-8")
     print("ok", N, "files ->", OUT)
 
