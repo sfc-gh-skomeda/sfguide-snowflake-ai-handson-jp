@@ -23,13 +23,21 @@ GROUP BY 1
 ORDER BY 2 DESC;
 
 -- ============================================================
--- 講師デモ（トライアルでは実行できません）
+-- 講師デモ（トライアルでは実行できません。AI スキーマは講師アカウントで別途作成）
 -- ============================================================
--- デモD: Snowflake CoWork で、社内文書（架空の PDF・data/docs/pdf）と販売データに質問する（RAG）
+-- デモD: AI 関数で問い合わせ文の感情と分類を付ける。例:
+-- SELECT inquiry_text, AI_SENTIMENT(inquiry_text):categories[0]:sentiment::STRING AS 感情,
+--        AI_CLASSIFY(inquiry_text, ['味', '量', '価格', '売り場', 'パッケージ']):labels[0]::STRING AS 分類
+-- FROM HANDSON_DB.VOC.INQUIRIES LIMIT 10;
+-- デモE: Snowflake CoWork で、社内文書（架空の PDF・data/docs/pdf）と販売データに質問する（RAG）
 --   PDF を AI_PARSE_DOCUMENT で文章にし、Cortex Search で検索できるようにして、Agent から使います。例:
 -- CREATE OR REPLACE TABLE HANDSON_DB.AI.DOCS_PARSED AS
 -- SELECT relative_path, AI_PARSE_DOCUMENT(TO_FILE('@HANDSON_DB.AI.DOCS_STAGE', relative_path), {'mode': 'LAYOUT'}):content::STRING AS content
 -- FROM DIRECTORY(@HANDSON_DB.AI.DOCS_STAGE);
+--   本文を約800文字ずつに分けて、検索しやすくします:
+-- CREATE OR REPLACE TABLE HANDSON_DB.AI.DOC_CHUNKS AS
+-- SELECT d.relative_path, c.value::STRING AS chunk
+-- FROM HANDSON_DB.AI.DOCS_PARSED d, LATERAL FLATTEN(SNOWFLAKE.CORTEX.SPLIT_TEXT_RECURSIVE_CHARACTER(d.content, 'markdown', 800, 100)) c;
 -- CREATE OR REPLACE CORTEX SEARCH SERVICE HANDSON_DB.AI.DOCS_SEARCH ON chunk WAREHOUSE = HANDSON_WH TARGET_LAG = '1 day'
 --   AS SELECT relative_path, chunk FROM HANDSON_DB.AI.DOC_CHUNKS;
 --   CoWork での質問の例:「抹茶ナッツバーに卵は入っていますか？」「7月に近畿で新商品の売上が落ちた理由は？」
